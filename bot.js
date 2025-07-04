@@ -2,8 +2,8 @@ const mineflayer = require('mineflayer');
 
 function createBot() {
     const botConfig = {
-        host: 'ironsmp.asaka.asia',       // Địa chỉ IP hoặc tên miền của server Minecraft
-        port: 25565,                       // Cổng của server Minecraft (25565 là mặc định)
+        host: '163.61.111.22',       // Địa chỉ IP hoặc tên miền của server Minecraft
+        port: 20023,                       // Cổng của server Minecraft (25565 là mặc định)
         username: 'bawg__',               // Tên người dùng của bot
         version: '1.21.1'                 // Phiên bản Minecraft của server
     };
