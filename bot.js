@@ -44,7 +44,10 @@ function createBot() {
             console.log(`[${now}] Người chơi ${entity.username} đã rời khỏi render distance!`);
         }
     });
-
+   bot.on('kicked', (reason, loggedIn) => {
+        console.warn('🚫 [KICKED] Bot bị đá khỏi server.');
+        console.warn('🔍 Lý do:', JSON.stringify(reason, null, 2));
+    });
     // --- Xử lý lỗi ---
     bot.on('error', (err) => {
         console.error(`❌ Lỗi bot: ${err}`);
