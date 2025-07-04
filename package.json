@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/bawgitne/mine-afk-crack#readme",
   "dependencies": {
+        "express": "^5.1.0",
     "mineflayer": "^4.30.0"
   }
 }
