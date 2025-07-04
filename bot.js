@@ -1,5 +1,6 @@
 const mineflayer = require('mineflayer');
-
+const app = express();
+const port = process.env.PORT || 3000;
 function createBot() {
     const botConfig = {
         host: '163.61.111.22',       // Địa chỉ IP hoặc tên miền của server Minecraft
@@ -62,6 +63,12 @@ function createBot() {
         setTimeout(createBot, 5000);
     });
 }
+app.get('/', (req, res) => {
+  res.send('Bot Mineflayer đang chạy');
+});
 
+app.listen(port, () => {
+  console.log(`✅ Web server listening on port ${port}`);
+});
 // Bắt đầu bot
 createBot();
