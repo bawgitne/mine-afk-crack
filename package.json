@@ -1,0 +1,22 @@
+{
+  "name": "afkiron",
+  "version": "1.0.0",
+  "description": "nothing",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bawgitne/mine-afk-crack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bawgitne/mine-afk-crack/issues"
+  },
+  "homepage": "https://github.com/bawgitne/mine-afk-crack#readme",
+  "dependencies": {
+    "mineflayer": "^4.30.0"
+  }
+}
