@@ -4,8 +4,8 @@ let reconnectDelay = 5000 // 5s trước khi reconnect sau khi thoát
 
 function createBot() {
   const bot = mineflayer.createBot({
-    host: 'ironsmp.asaka.asia', // hoặc IP server
-    port: 25565,
+    host: '163.61.111.22', // hoặc IP server
+    port: 20023,
     username: 'Nguyen12345' // Tài khoản crack, nếu dùng tài khoản Microsoft thì cần auth khác
   })
 
