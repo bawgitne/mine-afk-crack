@@ -1,75 +1,30 @@
-const mineflayer = require('mineflayer');
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const mineflayer = require('mineflayer')
+
+let reconnectDelay = 5000 // 5s trước khi reconnect sau khi thoát
+
 function createBot() {
-    const botConfig = {
-        host: '163.61.111.22',       // Địa chỉ IP hoặc tên miền của server Minecraft
-        port: 20023,                       // Cổng của server Minecraft (25565 là mặc định)
-        username: 'Nguyen12345',               // Tên người dùng của bot
-        version: '1.21.1'                 // Phiên bản Minecraft của server
-    };
+  const bot = mineflayer.createBot({
+    host: 'localhost', // hoặc IP server
+    port: 25565,
+    username: 'Nguyen12345' // Tài khoản crack, nếu dùng tài khoản Microsoft thì cần auth khác
+  })
 
-    const bot = mineflayer.createBot(botConfig);
+  bot.on('login', () => {
+    console.log('✅ Đã đăng nhập thành công!')
+    setTimeout(() => {
+      console.log('⏱️ 30 giây đã trôi qua. Thoát bot...')
+      bot.quit() // thoát bot
+    }, 28000)
+  })
 
-    console.log(`Đang kết nối tới server ${botConfig.host}:${botConfig.port} với tên ${botConfig.username}...`);
+  bot.on('end', () => {
+    console.log(`🔁 Đang chờ ${reconnectDelay / 1000}s để đăng nhập lại...`)
+    setTimeout(createBot, reconnectDelay)
+  })
 
-    // --- Khi bot spawn ---
-    bot.on('spawn', () => {
-        console.log('✅ Bot đã kết nối và spawn thành công!');
-        console.log('Đang thực hiện đăng nhập...');
-        bot.chat('/login phongcach');
-        setTimeout(() => {
-            bot.chat('/team warp hoglin');
-            console.log('Đã nhập lệnh "/team warp hoglin". Bot đang treo máy...');
-        }, 2000);
-    });
-
-    // --- Chat ---
-    bot.on('chat', (username, message) => {
-        if (username === bot.username) return;
-        console.log(`${username}: ${message}`);
-    });
-
-    // --- Khi người chơi vào render distance ---
-    bot.on('entitySpawn', (entity) => {
-        if (entity.type === 'player' && entity.username !== bot.username) {
-            const now = new Date().toLocaleString();
-            console.log(`[${now}] Người chơi ${entity.username} đã vào render distance!`);
-        }
-    });
-
-    // --- Khi người chơi rời render distance ---
-    bot.on('entityGone', (entity) => {
-        if (entity.type === 'player' && entity.username !== bot.username) {
-            const now = new Date().toLocaleString();
-            console.log(`[${now}] Người chơi ${entity.username} đã rời khỏi render distance!`);
-        }
-    });
-   bot.on('kicked', (reason, loggedIn) => {
-        console.warn('🚫 [KICKED] Bot bị đá khỏi server.');
-        console.warn('🔍 Lý do:', JSON.stringify(reason, null, 2));
-    });
-    // --- Xử lý lỗi ---
-    bot.on('error', (err) => {
-        console.error(`❌ Lỗi bot: ${err}`);
-        console.log('Đang thử kết nối lại sau 5 giây...');
-        setTimeout(createBot, 5000);
-    });
-
-    // --- Khi bot bị ngắt kết nối ---
-    bot.on('end', (reason) => {
-        console.log(`⚠️ Bot đã bị ngắt kết nối: ${reason}`);
-        console.log('Đang thử kết nối lại sau 5 giây...');
-        setTimeout(createBot, 5000);
-    });
+  bot.on('error', err => {
+    console.log('❌ Lỗi:', err)
+  })
 }
-app.get('/', (req, res) => {
-  res.send('Bot Mineflayer đang chạy');
-});
 
-app.listen(port, () => {
-  console.log(`✅ Web server listening on port ${port}`);
-});
-// Bắt đầu bot
-createBot();
+createBot()
